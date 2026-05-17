@@ -1,13 +1,13 @@
-package com.godsaeng.godsaeng_raid;
+package com.godsaeng.godsaeng_up;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GodsaengRaidApplication {
+public class GodsaengUpApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GodsaengRaidApplication.class, args);
+		SpringApplication.run(GodsaengUpApplication.class, args);
 	}
 
 }

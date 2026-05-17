@@ -1,10 +1,10 @@
-package com.godsaeng.godsaeng_raid;
+package com.godsaeng.godsaeng_up;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GodsaengRaidApplicationTests {
+class GodsaengUpApplicationTests {
 
 	@Test
 	void contextLoads() {
