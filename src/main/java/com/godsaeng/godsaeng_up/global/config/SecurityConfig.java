@@ -16,9 +16,14 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_URLS = {
             "/", // 메인
+            "/login", // 로그인 페이지
+            "/join", // 회원가입 페이지
             "/error", // 에러 페이지
             "/favicon.ico", // 브라우저 아이콘
-            "/auth/**"  // 로그인, 회원가입
+            "/auth/**",  // 로그인, 회원가입 처리
+            "/css/**",
+            "/js/**",
+            "/images/**"
     };
 
     @Bean
@@ -30,6 +35,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
