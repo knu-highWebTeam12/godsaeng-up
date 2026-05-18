@@ -4,6 +4,33 @@
 
 ---
 
+# 🛠️ 로컬 실행 가이드
+
+## 실행 전 준비
+
+- Java 17
+- MySQL 8.x
+- IntelliJ 또는 Spring Boot 실행 가능한 IDE
+
+## 실행 순서
+
+1. MySQL에서 프로젝트용 DB를 생성합니다.
+
+2. 루트 경로의 `.env.example`를 참고해서 `.env` 파일을 생성합니다.
+
+3. 애플리케이션을 실행하면 Flyway가 자동으로 초기 스키마를 반영합니다.
+4. 
+4. 기본 접속 경로는 `http://localhost:8080` 입니다.
+
+## 팀원 작업 시작 전 체크
+
+- `.env` 파일이 정상 작성되어 있는지 확인
+- 로컬 MySQL이 실행 중인지 확인
+- 브랜치는 `feat/{issue번호}-설명` 형식으로 생성
+- 작업 전에 `main` 최신 상태를 기준으로 브랜치를 분기
+
+---
+
 # 📌 프로젝트 소개
 
 갓생 RPG는 사용자가 하루 목표를 직접 등록하고,  
@@ -519,6 +546,54 @@ UUID 기반 파일명 사용
 - 레벨업 처리
 - 공개 프로필
 - 닉네임 기반 조회
+
+---
+
+# 📦 패키지 구조 가이드
+
+기본 방향은 `기능별 패키지 분리`입니다. 공통 코드는 `global`, 기능 코드는 각 도메인 패키지 안에서 관리합니다.
+
+```text
+com.godsaeng.godsaeng_up
+├─ global
+├─ home
+├─ auth
+├─ mission
+├─ profile
+└─ ranking
+```
+
+## 기능별 담당 기준
+
+- `auth`: 회원가입, 로그인, Security 연동
+- `mission`: 미션 등록, 조회, 수정, 상태 처리
+- `profile`: 공개 프로필, 레벨/경험치 표시
+- `ranking`: 랭킹 조회, TOP 5, 페이지네이션
+- `home`: 온보딩(`/`), 메인 대시보드(`/main`)
+
+## 패키지 내부 권장 구조
+
+기능 패키지 내부에서는 아래 구조를 기본으로 사용합니다.
+
+```text
+feature
+├─ controller
+├─ service
+├─ repository
+├─ entity
+└─ dto
+```
+
+예시:
+
+```text
+mission
+├─ controller
+├─ service
+├─ repository
+├─ entity
+└─ dto
+```
 
 ---
 
