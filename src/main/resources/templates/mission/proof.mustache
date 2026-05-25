@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>미션 인증하기</title>
+</head>
+<body>
+<h1>📸 갓생 미션 사진 인증</h1>
+
+<p>오늘의 갓생 미션을 완료하셨나요? 인증 사진을 올려주세요!</p>
+
+<form action="/missions/1/proof" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*" required>
+    <br><br>
+    <button type="submit">사진 올리고 경험치(EXP) 받기!</button>
+</form>
+</body>
+</html>

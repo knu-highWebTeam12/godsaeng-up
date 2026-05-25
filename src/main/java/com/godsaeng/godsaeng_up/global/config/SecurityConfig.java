@@ -23,12 +23,18 @@ public class SecurityConfig {
             "/auth/**",  // 로그인, 회원가입 처리
             "/css/**",
             "/js/**",
-            "/images/**"
+            "/images/**",
+            // 💡 우리가 추가한 프리패스 명단! (조장님, 저희 테스트 좀 할게요!)
+            "/profile",     // 프로필 검색 화면
+            "/missions/**"   // 미션 인증 화면 및 처리
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                // 💡 사진 전송(POST) 테스트를 위해 임시로 CSRF 방어막 끄기
+                .csrf(csrf -> csrf.disable())
+
                 .httpBasic(httpBasic -> httpBasic.disable()) // 브라우저 기본 팝업 로그인창 비활성화
                 .authorizeHttpRequests(authorize -> authorize // 로그인 없이 접근 가능한 URL 목록
                         .requestMatchers(PUBLIC_URLS).permitAll()

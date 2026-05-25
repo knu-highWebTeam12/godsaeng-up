@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>갓생업 유저 검색</title>
+</head>
+<body>
+<h1>🔍 갓생업 프로필 검색</h1>
+
+{{#errorMessage}}
+    <p style="color: red;">{{errorMessage}}</p>
+{{/errorMessage}}
+
+<form action="/profile" method="get">
+    <input type="text" name="nickname" placeholder="닉네임을 입력하세요" required>
+    <button type="submit">검색하기</button>
+</form>
+</body>
+</html>
