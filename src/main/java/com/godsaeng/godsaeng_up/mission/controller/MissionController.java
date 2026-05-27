@@ -5,11 +5,12 @@ import com.godsaeng.godsaeng_up.mission.dto.MissionResponseDto;
 import com.godsaeng.godsaeng_up.mission.service.MissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/missions")
 @RequiredArgsConstructor
 public class MissionController {
