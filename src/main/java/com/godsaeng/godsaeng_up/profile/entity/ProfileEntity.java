@@ -1,4 +1,4 @@
-package com.godsaeng.godsaeng_up.profile.Entity;
+package com.godsaeng.godsaeng_up.profile.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
