@@ -16,8 +16,6 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_URLS = {
             "/", // 메인
-            "/login", // 로그인 페이지
-            "/join", // 회원가입 페이지
             "/error", // 에러 페이지
             "/favicon.ico", // 브라우저 아이콘
             "/auth/**",  // 로그인, 회원가입 처리
@@ -35,12 +33,16 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
+                        .loginPage("/auth/login")
+                        .loginProcessingUrl("/auth/login")
+                        .usernameParameter("loginId")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/", true)
+                        .failureUrl("/auth/login?error")
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/auth/login?logout")
                 )
                 .build();
     }

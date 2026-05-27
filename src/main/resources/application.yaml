@@ -21,3 +21,13 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+
+  # 파일 업로드
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# 파일 저장 경로
+file:
+  dir: C:/uploads/mission/
