@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 
-public class MissionEntity {
+public MissionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
