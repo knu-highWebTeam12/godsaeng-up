@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface MissionRepository extends JpaRepository<MissionEntity, Long> {
 
     // 오늘 미션 전체 조회
-    List<MissionEntity> findByMemberIdAndMissionDate(Long memberId, LocalDate date);
+    List<MissionEntity> findByMember_IdAndMissionDate(Long memberId, LocalDate date);
 
     // 중복 등록 방지용
-    Optional<MissionEntity> findByMemberIdAndMissionDateAndDifficulty(
+    Optional<MissionEntity> findByMember_IdAndMissionDateAndDifficulty(
             Long memberId, LocalDate date, Difficulty difficulty);
 }

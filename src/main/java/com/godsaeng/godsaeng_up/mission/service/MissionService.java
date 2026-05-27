@@ -25,7 +25,7 @@ public class MissionService {
     @Transactional
     public MissionResponseDto createMission(Long memberId, MissionRequestDto dto) {
 
-        missionRepository.findByMemberIdAndMissionDateAndDifficulty(
+        missionRepository.findByMember_IdAndMissionDateAndDifficulty(
                         memberId, dto.getMissionDate(), dto.getDifficulty())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 해당 난이도의 미션이 등록되어 있습니다.");
@@ -48,7 +48,7 @@ public class MissionService {
     @Transactional(readOnly = true)
     public List<MissionResponseDto> getTodayMissions(Long memberId) {
         List<MissionEntity> missions = missionRepository
-                .findByMemberIdAndMissionDate(memberId, LocalDate.now());
+                .findByMember_IdAndMissionDate(memberId, LocalDate.now());
         return missions.stream()
                 .map(MissionResponseDto::new)
                 .collect(Collectors.toList());
