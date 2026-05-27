@@ -1,6 +1,7 @@
-package com.godsaeng.godsaeng_up.mission.entity;
+package com.godsaeng.godsaeng_up.domain.mission.entity;
 
-import com.godsaeng.godsaeng_up.profile.entity.ProfileEntity;
+import com.godsaeng.godsaeng_up.domain.profile.entity.Profile;
+import com.godsaeng.godsaeng_up.domain.profile.entity.Profile;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,7 @@ public class MissionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
-    private ProfileEntity member; //회원정보Entity
+    private Profile member;
 
     @Column(nullable = false)
     private String content;

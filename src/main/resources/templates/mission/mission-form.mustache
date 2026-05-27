@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>미션 등록</title>
+</head>
+<body>
+<h2>오늘의 미션 등록</h2>
+
+<form action="/missions" method="post">
+    <div>
+        <label>미션 내용</label>
+        <input type="text" name="content" placeholder="미션 내용을 입력하세요" required>
+    </div>
+
+    <div>
+        <label>난이도</label>
+        <select name="difficulty">
+            {{#difficulties}}
+                <option value="{{.}}">{{.}}</option>
+            {{/difficulties}}
+        </select>
+    </div>
+
+    <input type="hidden" name="missionDate" value="{{today}}">
+    <input type="hidden" name="memberId" value="{{memberId}}">
+
+    <button type="submit">등록하기</button>
+</form>
+</body>
+</html>

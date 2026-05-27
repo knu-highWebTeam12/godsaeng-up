@@ -1,49 +1,76 @@
 package com.godsaeng.godsaeng_up.domain.mission.service;
 
+import com.godsaeng.godsaeng_up.domain.mission.dto.MissionRequestDto;
+import com.godsaeng.godsaeng_up.domain.mission.dto.MissionResponseDto;
+import com.godsaeng.godsaeng_up.domain.mission.entity.MissionEntity;
+import com.godsaeng.godsaeng_up.domain.mission.entity.MissionStatus;
+import com.godsaeng.godsaeng_up.domain.mission.repository.MissionRepository;
 import com.godsaeng.godsaeng_up.domain.profile.entity.Profile;
 import com.godsaeng.godsaeng_up.domain.profile.repository.ProfileRepository;
-import com.godsaeng.godsaeng_up.global.util.FileStore;
-import com.godsaeng.godsaeng_up.domain.mission.entity.Mission;
-import com.godsaeng.godsaeng_up.domain.mission.repository.MissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MissionService {
 
     private final MissionRepository missionRepository;
     private final ProfileRepository profileRepository;
-    private final FileStore fileStore;
 
-    /**
-     * 미션 사진 인증 완료 처리 로직
-     */
     @Transactional
-    public void uploadMissionProof(Long missionId, MultipartFile file) throws IOException {
-        // 1. 데이터베이스에서 미션 찾기
-        Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 미션입니다. ID: " + missionId));
+    public MissionResponseDto createMission(Long memberId, MissionRequestDto dto) {
 
-        // 2. 내 컴퓨터에 사진 저장하기
-        String storeFileName = fileStore.storeFile(file);
+        missionRepository.findByMember_IdAndMissionDateAndDifficulty(
+                        memberId, dto.getMissionDate(), dto.getDifficulty())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 해당 난이도의 미션이 등록되어 있습니다.");
+                });
 
-        if (storeFileName != null) {
-            // 3. 미션 경험치 가져오기 및 미션 완료 처리
-            int exp = mission.getDifficulty().getExp();
-            mission.completeMission(storeFileName, exp);
+        Profile member = profileRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
-            Profile profile = profileRepository.findByUserId(mission.getUser().getId())
-                    .orElseThrow(() -> new IllegalArgumentException("프로필을 찾을 수 없습니다."));
-            profile.gainExp(exp);
+        MissionEntity mission = new MissionEntity();
+        mission.setMember(member);
+        mission.setContent(dto.getContent());
+        mission.setDifficulty(dto.getDifficulty());
+        mission.setMissionDate(dto.getMissionDate());
+        mission.setStatus(MissionStatus.TODO);
 
-        } else {
-            throw new IllegalArgumentException("업로드된 인증 사진 파일이 없습니다.");
+        return new MissionResponseDto(missionRepository.save(mission));
+    }
+
+    // 오늘 미션 조회
+    @Transactional(readOnly = true)
+    public List<MissionResponseDto> getTodayMissions(Long memberId) {
+        List<MissionEntity> missions = missionRepository
+                .findByMember_IdAndMissionDate(memberId, LocalDate.now());
+        return missions.stream()
+                .map(MissionResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    // 미션 수정 (수정 정책: 1회만 가능)
+    @Transactional
+    public MissionResponseDto updateMission(Long missionId, MissionRequestDto dto) {
+        MissionEntity mission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new IllegalArgumentException("미션을 찾을 수 없습니다."));
+
+        if (mission.isModified()) {
+            throw new IllegalStateException("미션은 1회만 수정할 수 있습니다.");
         }
+
+        if (mission.getStatus() == MissionStatus.DONE) {
+            throw new IllegalStateException("완료된 미션은 수정할 수 없습니다.");
+        }
+
+        mission.setContent(dto.getContent());
+        mission.setModified(true);
+
+        return new MissionResponseDto(mission);
     }
 }

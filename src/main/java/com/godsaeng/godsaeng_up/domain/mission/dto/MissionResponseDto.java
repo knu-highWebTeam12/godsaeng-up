@@ -1,8 +1,8 @@
-package com.godsaeng.godsaeng_up.mission.dto;
+package com.godsaeng.godsaeng_up.domain.mission.dto;
 
-import com.godsaeng.godsaeng_up.mission.entity.Difficulty;
-import com.godsaeng.godsaeng_up.mission.entity.MissionEntity;
-import com.godsaeng.godsaeng_up.mission.entity.MissionStatus;
+import com.godsaeng.godsaeng_up.domain.mission.entity.Difficulty;
+import com.godsaeng.godsaeng_up.domain.mission.entity.MissionEntity;
+import com.godsaeng.godsaeng_up.domain.mission.entity.MissionStatus;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -19,6 +19,7 @@ public class MissionResponseDto {
     private LocalDateTime completedAt;
     private int earnedExp;
     private boolean isModified;
+    private boolean isTodo;
 
     public MissionResponseDto(MissionEntity mission) {
         this.id = mission.getId();
@@ -30,5 +31,6 @@ public class MissionResponseDto {
         this.completedAt = mission.getCompletedAt();
         this.earnedExp = mission.getEarnedExp();
         this.isModified = mission.isModified();
+        this.isTodo = mission.getStatus() == MissionStatus.TODO;
     }
 }

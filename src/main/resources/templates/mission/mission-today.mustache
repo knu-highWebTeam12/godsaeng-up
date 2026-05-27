@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>오늘의 미션</title>
+</head>
+<body>
+<h2>오늘의 미션</h2>
+
+{{#missions}}
+    <div>
+        <p>난이도: {{difficulty}}</p>
+        <p>내용: {{content}}</p>
+        <p>상태: {{status}}</p>
+
+        {{#imageUrl}}
+            <img src="{{imageUrl}}" alt="인증 사진">
+        {{/imageUrl}}
+
+        {{^imageUrl}}
+            {{#isTodo}}
+                <a href="/missions/{{id}}/certify">인증하기</a>
+                {{^isModified}}
+                    <a href="/missions/{{id}}/edit">수정하기</a>
+                {{/isModified}}
+            {{/isTodo}}
+        {{/imageUrl}}
+    </div>
+{{/missions}}
+
+{{^missions}}
+    <p>오늘 등록된 퀘스트가 없습니다.</p>
+{{/missions}}
+</body>
+</html>
