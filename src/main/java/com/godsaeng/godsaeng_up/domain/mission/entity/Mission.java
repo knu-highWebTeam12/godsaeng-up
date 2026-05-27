@@ -1,7 +1,7 @@
-package com.godsaeng.godsaeng_up.mission.entity;
+package com.godsaeng.godsaeng_up.domain.mission.entity;
 
 import com.godsaeng.godsaeng_up.global.entity.BaseEntity;
-import com.godsaeng.godsaeng_up.member.entity.Member;     // 팀원이 만들 회원 엔티티 (가정)
+import com.godsaeng.godsaeng_up.domain.user.entity.User;     // 팀원이 만들 회원 엔티티 (가정)
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,8 +22,8 @@ public class Mission extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private String content;
 
@@ -44,8 +44,8 @@ public class Mission extends BaseEntity {
     private Boolean isModified;
 
     @Builder
-    public Mission(Member member, String content, Difficulty difficulty, LocalDate missionDate) {
-        this.member = member;
+    public Mission(User user, String content, Difficulty difficulty, LocalDate missionDate) {
+        this.user = user;
         this.content = content;
         this.difficulty = difficulty;
         this.status = MissionStatus.TODO; // 처음 미션을 만들 때는 무조건 TODO
