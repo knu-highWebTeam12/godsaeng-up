@@ -1,4 +1,4 @@
-package com.godsaeng.godsaeng_up.global.timeUtil;
+package com.godsaeng.godsaeng_up.global.util;
 
 import java.time.Instant;
 import java.time.ZoneId;
