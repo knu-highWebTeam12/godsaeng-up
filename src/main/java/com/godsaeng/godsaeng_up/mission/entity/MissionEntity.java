@@ -1,5 +1,6 @@
 package com.godsaeng.godsaeng_up.mission.entity;
 
+import com.godsaeng.godsaeng_up.profile.Entity.ProfileEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 
-public MissionEntity {
+public class MissionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
