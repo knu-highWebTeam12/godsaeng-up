@@ -1,4 +1,4 @@
-package com.godsaeng.godsaeng_up.mission.entity;
+package com.godsaeng.godsaeng_up.domain.mission.entity;
 
 public enum Difficulty {
     EASY(10), NORMAL(30), HARD(50);

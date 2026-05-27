@@ -1,8 +1,10 @@
-package com.godsaeng.godsaeng_up.mission.service;
+package com.godsaeng.godsaeng_up.domain.mission.service;
 
+import com.godsaeng.godsaeng_up.domain.profile.entity.Profile;
+import com.godsaeng.godsaeng_up.domain.profile.repository.ProfileRepository;
 import com.godsaeng.godsaeng_up.global.util.FileStore;
-import com.godsaeng.godsaeng_up.mission.entity.Mission;
-import com.godsaeng.godsaeng_up.mission.repository.MissionRepository;
+import com.godsaeng.godsaeng_up.domain.mission.entity.Mission;
+import com.godsaeng.godsaeng_up.domain.mission.repository.MissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import java.io.IOException;
 public class MissionService {
 
     private final MissionRepository missionRepository;
+    private final ProfileRepository profileRepository;
     private final FileStore fileStore;
 
     /**
@@ -35,8 +38,9 @@ public class MissionService {
             int exp = mission.getDifficulty().getExp();
             mission.completeMission(storeFileName, exp);
 
-            // 미션을 작성한 유저를 데려와서 계산된 경험치를 지갑에 넣어줍니다. (레벨업은 Member 안에서 자동 계산됨)
-            mission.getMember().addExp(exp);
+            Profile profile = profileRepository.findByUserId(mission.getUser().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("프로필을 찾을 수 없습니다."));
+            profile.gainExp(exp);
 
         } else {
             throw new IllegalArgumentException("업로드된 인증 사진 파일이 없습니다.");

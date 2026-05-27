@@ -1,6 +1,6 @@
-package com.godsaeng.godsaeng_up.mission.controller;
+package com.godsaeng.godsaeng_up.domain.mission.controller;
 
-import com.godsaeng.godsaeng_up.mission.service.MissionService;
+import com.godsaeng.godsaeng_up.domain.mission.service.MissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

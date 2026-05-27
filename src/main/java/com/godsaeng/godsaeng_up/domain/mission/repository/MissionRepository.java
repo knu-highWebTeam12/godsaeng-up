@@ -1,6 +1,6 @@
-package com.godsaeng.godsaeng_up.mission.repository;
+package com.godsaeng.godsaeng_up.domain.mission.repository;
 
-import com.godsaeng.godsaeng_up.mission.entity.Mission;
+import com.godsaeng.godsaeng_up.domain.mission.entity.Mission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
