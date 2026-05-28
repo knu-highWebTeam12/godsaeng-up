@@ -1,7 +1,7 @@
 package com.godsaeng.godsaeng_up.domain.mission.dto;
 
 import com.godsaeng.godsaeng_up.domain.mission.entity.Difficulty;
-import com.godsaeng.godsaeng_up.domain.mission.entity.MissionEntity;
+import com.godsaeng.godsaeng_up.domain.mission.entity.Mission;
 import com.godsaeng.godsaeng_up.domain.mission.entity.MissionStatus;
 import lombok.Getter;
 
@@ -21,7 +21,7 @@ public class MissionResponseDto {
     private boolean isModified;
     private boolean isTodo;
 
-    public MissionResponseDto(MissionEntity mission) {
+    public MissionResponseDto(Mission mission) {
         this.id = mission.getId();
         this.content = mission.getContent();
         this.difficulty = mission.getDifficulty();

@@ -1,7 +1,7 @@
 package com.godsaeng.godsaeng_up.domain.mission.entity;
 
 import com.godsaeng.godsaeng_up.domain.profile.entity.Profile;
-import com.godsaeng.godsaeng_up.domain.profile.entity.Profile;
+import com.godsaeng.godsaeng_up.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,23 +13,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "mission",
+@Table(name = "missions",
         uniqueConstraints = @UniqueConstraint(
-                columnNames = {"member_id", "mission_date", "difficulty"}
+                columnNames = {"user_id", "mission_date", "difficulty"}
         ))
 @Getter
 @Setter
 @NoArgsConstructor
 
-public class MissionEntity {
+public class Mission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Profile member;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private String content;

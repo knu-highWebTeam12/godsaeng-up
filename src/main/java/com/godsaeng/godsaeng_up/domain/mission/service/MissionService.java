@@ -2,11 +2,11 @@ package com.godsaeng.godsaeng_up.domain.mission.service;
 
 import com.godsaeng.godsaeng_up.domain.mission.dto.MissionRequestDto;
 import com.godsaeng.godsaeng_up.domain.mission.dto.MissionResponseDto;
-import com.godsaeng.godsaeng_up.domain.mission.entity.MissionEntity;
+import com.godsaeng.godsaeng_up.domain.mission.entity.Mission;
 import com.godsaeng.godsaeng_up.domain.mission.entity.MissionStatus;
 import com.godsaeng.godsaeng_up.domain.mission.repository.MissionRepository;
-import com.godsaeng.godsaeng_up.domain.profile.entity.Profile;
-import com.godsaeng.godsaeng_up.domain.profile.repository.ProfileRepository;
+import com.godsaeng.godsaeng_up.domain.user.entity.User;
+import com.godsaeng.godsaeng_up.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,22 +20,22 @@ import java.util.stream.Collectors;
 public class MissionService {
 
     private final MissionRepository missionRepository;
-    private final ProfileRepository profileRepository;
+    private final UserRepository userRepository;
 
     @Transactional
-    public MissionResponseDto createMission(Long memberId, MissionRequestDto dto) {
+    public MissionResponseDto createMission(Long userId, MissionRequestDto dto) {
 
-        missionRepository.findByMember_IdAndMissionDateAndDifficulty(
-                        memberId, dto.getMissionDate(), dto.getDifficulty())
+        missionRepository.findByUser_IdAndMissionDateAndDifficulty(
+                        userId, dto.getMissionDate(), dto.getDifficulty())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 해당 난이도의 미션이 등록되어 있습니다.");
                 });
 
-        Profile member = profileRepository.findById(memberId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
-        MissionEntity mission = new MissionEntity();
-        mission.setMember(member);
+        Mission mission = new Mission();
+        mission.setUser(user);
         mission.setContent(dto.getContent());
         mission.setDifficulty(dto.getDifficulty());
         mission.setMissionDate(dto.getMissionDate());
@@ -46,9 +46,9 @@ public class MissionService {
 
     // 오늘 미션 조회
     @Transactional(readOnly = true)
-    public List<MissionResponseDto> getTodayMissions(Long memberId) {
-        List<MissionEntity> missions = missionRepository
-                .findByMember_IdAndMissionDate(memberId, LocalDate.now());
+    public List<MissionResponseDto> getTodayMissions(Long userId) {
+        List<Mission> missions = missionRepository
+                .findByUser_IdAndMissionDate(userId, LocalDate.now());
         return missions.stream()
                 .map(MissionResponseDto::new)
                 .collect(Collectors.toList());
@@ -57,7 +57,7 @@ public class MissionService {
     // 미션 수정 (수정 정책: 1회만 가능)
     @Transactional
     public MissionResponseDto updateMission(Long missionId, MissionRequestDto dto) {
-        MissionEntity mission = missionRepository.findById(missionId)
+        Mission mission = missionRepository.findById(missionId)
                 .orElseThrow(() -> new IllegalArgumentException("미션을 찾을 수 없습니다."));
 
         if (mission.isModified()) {

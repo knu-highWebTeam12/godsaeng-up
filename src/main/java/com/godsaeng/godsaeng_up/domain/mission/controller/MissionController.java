@@ -23,16 +23,16 @@ public class MissionController {
     // 미션 등록
     @PostMapping
     public ResponseEntity<MissionResponseDto> createMission(
-            @RequestParam Long memberId,
+            @RequestParam Long userId,
             @RequestBody MissionRequestDto dto) {
-        return ResponseEntity.ok(missionService.createMission(memberId, dto));
+        return ResponseEntity.ok(missionService.createMission(userId, dto));
     }
 
     // 오늘 미션 조회
     @GetMapping("/today")
     public ResponseEntity<List<MissionResponseDto>> getTodayMissions(
-            @RequestParam Long memberId) {
-        return ResponseEntity.ok(missionService.getTodayMissions(memberId));
+            @RequestParam Long userId) {
+        return ResponseEntity.ok(missionService.getTodayMissions(userId));
     }
 
     // 미션 수정
@@ -44,10 +44,10 @@ public class MissionController {
     }
 
     @GetMapping("/new")
-    public String missionForm(Model model, @RequestParam Long memberId) {
+    public String missionForm(Model model, @RequestParam Long userId) {
         model.addAttribute("difficulties", Difficulty.values());
         model.addAttribute("today", LocalDate.now().toString());
-        model.addAttribute("memberId", memberId);
+        model.addAttribute("userId", userId);
         return "mission/mission-form";
     }
 }
