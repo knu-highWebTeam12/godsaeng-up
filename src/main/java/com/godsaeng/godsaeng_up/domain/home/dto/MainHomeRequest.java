@@ -22,7 +22,8 @@ public record MainHomeRequest(
             String nickname,
             int level,
             int exp,
-            String characterName
+            String characterName,
+            boolean isMe
     ) {
     }
 }

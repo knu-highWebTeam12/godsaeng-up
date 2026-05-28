@@ -19,6 +19,7 @@ public class SecurityConfig {
             "/error", // 에러 페이지
             "/favicon.ico", // 브라우저 아이콘
             "/auth/**",  // 로그인, 회원가입 처리
+            "/ranking",
             "/css/**",
             "/js/**",
             "/images/**"

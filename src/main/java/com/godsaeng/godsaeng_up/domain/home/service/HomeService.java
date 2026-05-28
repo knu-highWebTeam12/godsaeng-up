@@ -10,12 +10,14 @@ import com.godsaeng.godsaeng_up.domain.user.repository.UserRepository;
 import com.godsaeng.godsaeng_up.global.level.CharacterType;
 import com.godsaeng.godsaeng_up.global.level.LevelPolicy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +44,8 @@ public class HomeService {
                 .map(MissionResponseDto::new)
                 .toList();
 
+        List<MainHomeRequest.RankingItem> topRankings = getTopRankings(user.getId());
+
         return new MainHomeRequest(
                 profile.getNickname(),
                 profile.getLevel(),
@@ -53,7 +57,34 @@ public class HomeService {
                 LocalDate.now().toString(),
                 !todayMissions.isEmpty(),
                 todayMissions,
-                Collections.emptyList()
+                topRankings
         );
+    }
+
+    private List<MainHomeRequest.RankingItem> getTopRankings(Long currentUserId) {
+        List<Profile> topProfiles = profileRepository.findAll(
+                PageRequest.of(0, 5,
+                        Sort.by(
+                                Sort.Order.desc("level"),
+                                Sort.Order.desc("exp"),
+                                Sort.Order.asc("id")
+                        ))
+        ).getContent();
+
+        return IntStream.range(0, topProfiles.size())
+                .mapToObj(index -> {
+                    Profile rankingProfile = topProfiles.get(index);
+                    CharacterType rankingCharacter = CharacterType.fromLevel(rankingProfile.getLevel());
+
+                    return new MainHomeRequest.RankingItem(
+                            index + 1,
+                            rankingProfile.getNickname(),
+                            rankingProfile.getLevel(),
+                            rankingProfile.getExp(),
+                            rankingCharacter.getDisplayName(),
+                            rankingProfile.getUserId().equals(currentUserId)
+                    );
+                })
+                .toList();
     }
 }
