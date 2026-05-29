@@ -23,6 +23,7 @@ public record MainHomeRequest(
             int level,
             int exp,
             String characterName,
+            String characterImage,
             boolean isMe
     ) {
     }
