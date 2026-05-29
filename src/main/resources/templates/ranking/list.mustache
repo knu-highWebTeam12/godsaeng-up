@@ -24,7 +24,6 @@
                     <p class="text-secondary small mb-1">전체 유저 랭킹</p>
                     <h1 class="h3 mb-0">실시간 랭킹</h1>
                 </div>
-                <span class="badge text-bg-dark">페이지 {{displayPage}}</span>
             </div>
 
             <div class="card border-0 shadow-sm">
@@ -35,7 +34,6 @@
                             <tr>
                                 <th class="px-4 py-3">순위</th>
                                 <th class="py-3">닉네임</th>
-                                <th class="py-3">캐릭터</th>
                                 <th class="py-3 text-end">레벨</th>
                                 <th class="px-4 py-3 text-end">EXP</th>
                             </tr>
@@ -45,19 +43,26 @@
                                 <tr class="{{#isMe}}table-warning{{/isMe}}">
                                     <td class="px-4 py-3 fw-semibold">{{rank}}</td>
                                     <td class="py-3">
-                                        {{nickname}}
-                                        {{#isMe}}
-                                            <span class="badge text-bg-dark ms-2">내 계정</span>
-                                        {{/isMe}}
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img src="{{characterImage}}" alt="{{characterName}}" class="rounded" style="width: 24px; height: 24px; object-fit: contain;">
+                                            <div>
+                                                <div>
+                                                    {{nickname}}
+                                                    {{#isMe}}
+                                                        <span class="badge text-bg-dark ms-2">Me!</span>
+                                                    {{/isMe}}
+                                                </div>
+                                                <div class="small text-secondary">{{characterName}}</div>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td class="py-3">{{characterName}}</td>
                                     <td class="py-3 text-end">Lv. {{level}}</td>
                                     <td class="px-4 py-3 text-end">{{exp}}</td>
                                 </tr>
                             {{/rankings}}
                             {{^rankings}}
                                 <tr>
-                                    <td colspan="5" class="px-4 py-5 text-center text-secondary">
+                                    <td colspan="4" class="px-4 py-5 text-center text-secondary">
                                         아직 랭킹 데이터가 없습니다.
                                     </td>
                                 </tr>
