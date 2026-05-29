@@ -20,6 +20,8 @@ public class SecurityConfig {
             "/favicon.ico", // 브라우저 아이콘
             "/auth/**",  // 로그인, 회원가입 처리
             "/ranking",
+            "/user/**",
+            "/api/user/**",
             "/css/**",
             "/js/**",
             "/images/**"
