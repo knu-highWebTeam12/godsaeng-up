@@ -139,9 +139,17 @@
                         {{#topRankings}}
                             <a href="/user/{{nickname}}" class="list-group-item list-group-item-action px-0 py-3 border-0 border-bottom">
                                 <div class="d-flex justify-content-between align-items-start">
-                                    <div>
-                                        <div class="fw-semibold">{{rank}}위 · {{nickname}}</div>
-                                        <div class="small text-secondary">{{characterName}}</div>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="{{characterImage}}" alt="{{characterName}}" class="rounded" style="width: 24px; height: 24px; object-fit: contain;">
+                                        <div>
+                                            <div class="fw-semibold">
+                                                {{rank}}위 · {{nickname}}
+                                                {{#isMe}}
+                                                    <span class="badge text-bg-dark ms-2">Me!</span>
+                                                {{/isMe}}
+                                            </div>
+                                            <div class="small text-secondary">{{characterName}}</div>
+                                        </div>
                                     </div>
                                     <div class="text-end">
                                         <div class="small fw-semibold">Lv. {{level}}</div>
