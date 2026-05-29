@@ -1,13 +1,26 @@
 package com.godsaeng.godsaeng_up.domain.mission.entity;
 
-public enum Difficulty {
-    EASY, NORMAL, HARD;
+import lombok.Getter;
 
-    public int getExp() {
-        return switch (this) {
-            case EASY -> 10;
-            case NORMAL -> 30;
-            case HARD -> 50;
+@Getter
+public enum Difficulty {
+    EASY("하", 10),
+    NORMAL("중", 30),
+    HARD("상", 50);
+
+    private final String difficulty;
+    private final int exp;
+
+    Difficulty(String difficulty, int exp) {
+        this.difficulty = difficulty;
+        this.exp = exp;
+    }
+
+    public String difficultyClass(Difficulty difficulty) {
+        return switch (difficulty) {
+            case HARD -> "text-bg-danger";
+            case NORMAL -> "text-bg-warning";
+            case EASY -> "text-bg-primary";
         };
     }
 }
