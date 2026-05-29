@@ -71,6 +71,7 @@ public class RankingService {
                 profile.getLevel(),
                 profile.getExp(),
                 characterType.getDisplayName(),
+                characterType.getRankingImagePath(),
                 currentUserId != null && profile.getUserId().equals(currentUserId)
         );
     }

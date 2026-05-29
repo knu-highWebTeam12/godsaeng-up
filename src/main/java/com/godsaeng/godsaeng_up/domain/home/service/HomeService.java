@@ -61,6 +61,11 @@ public class HomeService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public List<MainHomeRequest.RankingItem> getOnboardingTopRankings() {
+        return getTopRankings(null);
+    }
+
     private List<MainHomeRequest.RankingItem> getTopRankings(Long currentUserId) {
         List<Profile> topProfiles = profileRepository.findAll(
                 PageRequest.of(0, 5,
@@ -82,7 +87,8 @@ public class HomeService {
                             rankingProfile.getLevel(),
                             rankingProfile.getExp(),
                             rankingCharacter.getDisplayName(),
-                            rankingProfile.getUserId().equals(currentUserId)
+                            rankingCharacter.getRankingImagePath(),
+                            currentUserId != null && rankingProfile.getUserId().equals(currentUserId)
                     );
                 })
                 .toList();

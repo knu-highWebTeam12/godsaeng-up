@@ -16,6 +16,16 @@ public class HomeController {
 
     private final HomeService homeService;
 
+    @GetMapping("/")
+    public String onboarding(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        if (userDetails != null) {
+            return "redirect:/main";
+        }
+
+        model.addAttribute("topRankings", homeService.getOnboardingTopRankings());
+        return "home/index";
+    }
+
     @GetMapping("/main")
     public String main(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         MainHomeRequest page = homeService.getMainHome(userDetails.getUsername());

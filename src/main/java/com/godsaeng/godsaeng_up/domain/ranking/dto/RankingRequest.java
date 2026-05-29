@@ -6,6 +6,7 @@ public record RankingRequest(
         int level,
         int exp,
         String characterName,
+        String characterImage,
         boolean isMe
 ) {
 }
