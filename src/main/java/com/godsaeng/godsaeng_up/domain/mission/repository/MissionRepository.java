@@ -3,6 +3,9 @@ package com.godsaeng.godsaeng_up.domain.mission.repository;
 import com.godsaeng.godsaeng_up.domain.mission.entity.Difficulty;
 import com.godsaeng.godsaeng_up.domain.mission.entity.Mission;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,4 +19,18 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     // 중복 등록 방지용
     Optional<Mission> findByUser_IdAndMissionDateAndDifficulty(
             Long userId, LocalDate date, Difficulty difficulty);
+
+    List<Mission> findByUser_IdAndMissionDateIn(Long userId, List<LocalDate> dates);
+
+    @Query("""
+            select distinct m.missionDate
+            from Mission m
+            where m.user.id = :userId
+              and m.missionDate < :cursorDate
+            order by m.missionDate desc
+            """)
+    List<LocalDate> findDistinctMissionDatesBefore(
+            @Param("userId") Long userId,
+            @Param("cursorDate") LocalDate cursorDate,
+            Pageable pageable);
 }
