@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>미션 수정</title>
+</head>
+<body>
+<h2>미션 수정</h2>
+
+<form action="/missions/{{mission.id}}/edit" method="post">
+    <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}">
+
+    <div>
+        <label>미션 내용</label>
+        <input type="text" name="content" value="{{mission.content}}" required>
+    </div>
+
+    <input type="hidden" name="missionDate" value="{{mission.missionDate}}">
+
+    <button type="submit">수정하기</button>
+</form>
+</body>
+</html>
