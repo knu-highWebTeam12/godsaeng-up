@@ -8,6 +8,8 @@
 <h2>오늘의 미션 등록</h2>
 
 <form action="/missions/new" method="post">
+    <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}">
+
     <div>
         <label>미션 내용</label>
         <input type="text" name="content" placeholder="미션 내용을 입력하세요" required>
