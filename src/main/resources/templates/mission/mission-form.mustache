@@ -7,7 +7,7 @@
 <body>
 <h2>오늘의 미션 등록</h2>
 
-<form action="/missions" method="post">
+<form action="/missions/new" method="post">
     <div>
         <label>미션 내용</label>
         <input type="text" name="content" placeholder="미션 내용을 입력하세요" required>
@@ -23,7 +23,6 @@
     </div>
 
     <input type="hidden" name="missionDate" value="{{today}}">
-    <input type="hidden" name="userId" value="{{userId}}">
 
     <button type="submit">등록하기</button>
 </form>
