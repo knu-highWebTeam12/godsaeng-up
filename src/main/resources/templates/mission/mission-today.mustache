@@ -1,35 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>오늘의 미션</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 미션 | 갓생 업</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h2>오늘의 미션</h2>
-
-{{#missions}}
-    <div>
-        <p>난이도: {{difficulty}}</p>
-        <p>내용: {{content}}</p>
-        <p>상태: {{status}}</p>
-
-        {{#imageUrl}}
-            <img src="{{imageUrl}}" alt="인증 사진">
-        {{/imageUrl}}
-
-        {{^imageUrl}}
-            {{#isTodo}}
-                <a href="/missions/{{id}}/certify">인증하기</a>
-                {{^isModified}}
-                    <a href="/missions/{{id}}/edit">수정하기</a>
-                {{/isModified}}
-            {{/isTodo}}
-        {{/imageUrl}}
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/main">갓생 업</a>
+        <div class="d-flex gap-2">
+            <a href="/missions/new" class="btn btn-dark btn-sm">미션 등록</a>
+            <a href="/main" class="btn btn-outline-dark btn-sm">메인으로</a>
+        </div>
     </div>
-{{/missions}}
+</nav>
 
-{{^missions}}
-    <p>오늘 등록된 퀘스트가 없습니다.</p>
-{{/missions}}
+<main class="container py-4 py-lg-5">
+    <section class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+                <div>
+                    <p class="text-secondary small mb-1">Today Mission</p>
+                    <h1 class="h4 mb-0">오늘의 미션</h1>
+                </div>
+            </div>
+
+            {{^missions}}
+                <div class="border rounded p-4 bg-light text-center text-secondary">
+                    오늘 등록된 퀘스트가 없습니다.
+                </div>
+            {{/missions}}
+
+            {{#missions}}
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item px-0 py-3 bg-transparent">
+                        <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+                            <div>
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    <span class="badge text-bg-primary">{{difficulty}}</span>
+                                    <span class="badge text-bg-light">{{status}}</span>
+                                    {{#isModified}}
+                                        <span class="badge text-bg-warning">수정됨</span>
+                                    {{/isModified}}
+                                </div>
+                                <h2 class="h6 mb-1">{{content}}</h2>
+                            </div>
+
+                            <div class="text-md-end">
+                                {{#imageUrl}}
+                                    <img src="{{imageUrl}}" alt="인증 사진" class="img-thumbnail" style="width: 88px; height: 88px; object-fit: cover;">
+                                {{/imageUrl}}
+
+                                {{^imageUrl}}
+                                    {{#isTodo}}
+                                        {{^isModified}}
+                                            <a href="/missions/{{id}}/edit" class="btn btn-outline-secondary btn-sm">수정하기</a>
+                                        {{/isModified}}
+                                    {{/isTodo}}
+                                {{/imageUrl}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/missions}}
+        </div>
+    </section>
+</main>
 </body>
 </html>
