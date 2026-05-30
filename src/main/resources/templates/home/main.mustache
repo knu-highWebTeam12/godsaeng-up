@@ -70,7 +70,7 @@
                             <p class="text-secondary small mb-1">오늘의 퀘스트</p>
                             <h2 class="h4 mb-0">{{today}}</h2>
                         </div>
-                        <a href="/api/missions/new" class="btn btn-dark">미션 등록하기</a>
+                        <a href="/missions/new" class="btn btn-dark">미션 등록하기</a>
                     </div>
 
                     {{^hasTodayMissions}}
@@ -102,7 +102,7 @@
                                             {{#isTodo}}
                                                 <a href="/missions/{{id}}/proof" class="btn btn-outline-dark btn-sm mb-2">인증하기</a>
                                                 <div>
-                                                    <a href="/api/missions/{{id}}/edit" class="btn btn-outline-secondary btn-sm">수정하기</a>
+                                                    <a href="/missions/{{id}}/edit" class="btn btn-outline-secondary btn-sm">수정하기</a>
                                                 </div>
                                             {{/isTodo}}
 
