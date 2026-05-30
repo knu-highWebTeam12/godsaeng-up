@@ -6,12 +6,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.UUID;
 
 @Component
 public class FileStore {
+    private static final String MISSION_UPLOAD_URL_PREFIX = "/uploads/mission/";
 
-    // application.yml에 적어둔 C:/uploads/mission/ 경로를 가져와요.
     @Value("${file.dir}")
     private String fileDir;
 
@@ -22,11 +24,19 @@ public class FileStore {
 
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFilename);
+        Files.createDirectories(Path.of(fileDir));
 
-        // 지정된 경로에 파일 진짜로 저장하기!
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
         return storeFileName;
+    }
+
+    public String getFileUrl(String storeFileName) {
+        return MISSION_UPLOAD_URL_PREFIX + storeFileName;
+    }
+
+    public String getFileDir() {
+        return fileDir;
     }
 
     private String getFullPath(String filename) {
@@ -41,6 +51,9 @@ public class FileStore {
 
     private String extractExt(String originalFilename) {
         int pos = originalFilename.lastIndexOf(".");
+        if (pos < 0) {
+            throw new IllegalArgumentException("파일 확장자를 확인할 수 없습니다.");
+        }
         return originalFilename.substring(pos + 1);
     }
 }

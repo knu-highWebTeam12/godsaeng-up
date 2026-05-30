@@ -41,7 +41,7 @@ public class HomeService {
 
         List<MissionResponseDto> todayMissions = missionRepository.findByUser_IdAndMissionDate(user.getId(), LocalDate.now())
                 .stream()
-                .map(MissionResponseDto::new)
+                .map(MissionResponseDto::from)
                 .toList();
 
         List<MainHomeRequest.RankingItem> topRankings = getTopRankings(user.getId());

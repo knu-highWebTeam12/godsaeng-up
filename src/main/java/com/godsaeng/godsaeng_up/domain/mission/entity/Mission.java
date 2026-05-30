@@ -1,11 +1,11 @@
 package com.godsaeng.godsaeng_up.domain.mission.entity;
 
-import com.godsaeng.godsaeng_up.domain.profile.entity.Profile;
 import com.godsaeng.godsaeng_up.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@Slf4j
 public class Mission {
 
     @Id
@@ -61,5 +61,12 @@ public class Mission {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    // 사진 인증을 완료했을 때 상태를 변경하는 핵심 비즈니스 메서드
+    public void completeMission(String imageUrl, int earnedExp) {
+        this.status = MissionStatus.DONE;
+        this.imageUrl = imageUrl;
+        this.completedAt = LocalDateTime.now();
+        this.earnedExp = earnedExp;
+    }
 }
 
